@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CuraHub</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#2563EB">
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    button { 
+      background: #2563EB; color: white; border: none;
+      padding: 15px 20px; border-radius: 8px; margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌍 CuraHub</h1>
+  <p>Medical Innovation Platform</p>
+  <button id="installBtn">Install App</button>
+
+  <script>
+    // Install prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('installBtn').style.display = 'block';
+    });
+
+    document.getElementById('installBtn').addEventListener('click', () => {
+      if(deferredPrompt) deferredPrompt.prompt();
+    });
+
+    // Service Worker
+    if('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+  </script>
+</body>
+</html>
